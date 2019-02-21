@@ -1,7 +1,5 @@
 ---
-- src: https://github.com/x/foo
+- src: https://github.com/lion-u/Mentorship_program/tree/master/Deploy/lz-tomcat
   scm: git
-- src: https://github.com/x/bar
-  scm: git
-- src: https://github.com/x/baz
+- src: https://github.com/lion-u/Mentorship_program/tree/master/Deploy/lz-nginx
   scm: git
