@@ -1,0 +1,7 @@
+---
+- src: https://github.com/x/foo
+  scm: git
+- src: https://github.com/x/bar
+  scm: git
+- src: https://github.com/x/baz
+  scm: git
