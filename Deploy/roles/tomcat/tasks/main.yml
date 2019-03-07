@@ -86,8 +86,7 @@
   become: true
   systemd:
         name: tomcat
-        enabled: yes
-        state: restarted
+        state: reloaded
   
 
 - name: wait for tomcat to start
