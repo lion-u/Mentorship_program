@@ -1,0 +1,8 @@
+---
+- name: Homework#2 Check httpd webserver 2
+  hosts: 192.168.200.5
+  become: yes
+  tasks:
+  - name: check http status app server 2
+    uri:
+      url: "http://192.168.200.5:8888/sample"

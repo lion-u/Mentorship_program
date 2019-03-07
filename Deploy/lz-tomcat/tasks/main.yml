@@ -1,0 +1,102 @@
+# tasks file for appsrv
+---
+- name: Install Java
+  become: true 
+  yum:
+        name: 
+        - "{{ java_version }}"
+        state: present
+
+- name: Ensure group "tomcat" exists
+  become: true
+  group:
+        name: tomcat
+        state: present
+
+- name: Add the user 'tomcat' with a specific uid and a primary group of 'tomcat'
+  become: true
+  user:
+        name: tomcat
+        comment: Tomcat user
+        create_home: yes
+        group: tomcat
+
+- name: copy Tomcat
+  become: true
+  copy: 
+        src: "{{ tomcat_src_arc }}"
+        dest: "{{ tomcat_dest_arc }}"
+
+- name: Extract apache-tomcat-8.5.35.tar.gz into /opt/apache-tomcat-8.5.35
+  become: true
+  unarchive:
+        src: "{{ tomcat_dest_arc }}"
+        dest: /opt/
+        remote_src: yes
+        mode: 0755
+        owner: tomcat
+
+- name: Change ownership of Tomcat installation
+  become: true
+  file: 
+        path: /opt/{{ tomcat_folder }}
+        owner: tomcat 
+        group: tomcat 
+        state: directory 
+        recurse: yes
+
+- name: Configure Tomcat service  
+  become: true
+  template:
+        src: tomcat.service
+        dest: /etc/systemd/system/
+        owner: tomcat
+        group: tomcat
+        mode: 0644
+        
+- name: Configure Tomcat port 8888  
+  become: true
+  template:
+        src: server.xml
+        dest: /opt/{{ tomcat_folder }}/conf
+        owner: tomcat
+        group: tomcat
+        mode: 0644
+        
+- name: Open port 8888 for http access
+  become: true
+  firewalld:
+        port: 8888/tcp
+        permanent: yes
+        state: enabled
+
+- name: Restart the firewalld service to load firewall changes
+  become: true
+  service: 
+        name: firewalld 
+        state: restarted
+
+- name: force systemd to reread configs after add tomcat service
+  become: true
+  systemd:
+        daemon_reload: yes
+
+- name: enable tomcat startup
+  become: true
+  systemd:
+        name: tomcat
+        enabled: yes
+        state: restarted
+  
+
+- name: wait for tomcat to start
+  wait_for: port=8888
+  
+- name: copy war to app servers
+  become: true
+  copy: src=./{{ tomcat_war }} dest=/opt/{{ tomcat_folder }}/webapps/{{ tomcat_war }} owner=tomcat group=tomcat mode=0744
+  notify: restart tomcat
+
+- meta: flush_handlers
+# - include: appsrv/files/check1.yml
+# - include: appsrv/files/check2.yml

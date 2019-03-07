@@ -1,0 +1,9 @@
+---
+- name: Install tomcat server
+  pre_tasks:
+  
+  - name: Update yum cache if needed.
+    become: true
+    yum: update_cache=yes
+
+  

@@ -1,0 +1,8 @@
+---
+java_version: java-1.8.0-openjdk.x86_64
+tomcat_src_arc: apache-tomcat-8.5.35.tar.gz
+tomcat_dest_arc: /opt/apache-tomcat-8.5.35.tar.gz
+tomcat_folder: apache-tomcat-8.5.35
+tomcat_war: sample.war
+url1: http://192.168.200.4:8888/sample/
+url2: http://192.168.200.5:8888/sample/

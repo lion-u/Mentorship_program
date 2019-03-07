@@ -1,0 +1,7 @@
+---
+# handlers file for appsrv
+- name: restart tomcat
+  become: true
+  systemd:
+        name: tomcat
+        state: restarted
