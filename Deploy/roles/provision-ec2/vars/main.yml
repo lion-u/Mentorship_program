@@ -1,5 +1,5 @@
 ec2_keypair: "JenkinsKeyPair"
-ec2_security_group: "devenv-sg"
+ec2_security_group: "sg-085d6f10bec7de170"
 ec2_instance_type: "t2.micro"
 ec2_image: "ami-0233bae36f499afe8"
 ec2_subnet_ids: "subnet-86dbaace"
