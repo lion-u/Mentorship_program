@@ -76,10 +76,11 @@
         name: firewalld 
         state: restarted
 
-- name: force systemd to reread configs after add tomcat service
-  become: true
-  systemd:
-        daemon_reload: yes
+# - name: force systemd to reread configs after add tomcat service
+#   become: true
+#   systemd:
+#         name: 
+#         daemon_reload: yes
 
 - name: enable tomcat startup
   become: true
