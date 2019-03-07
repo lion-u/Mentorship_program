@@ -2,7 +2,7 @@ ec2_keypair: "JenkinsKeyPair"
 ec2_security_group: "devenv-sg"
 ec2_instance_type: "t2.micro"
 ec2_image: "ami-0233bae36f499afe8"
-ec2_subnet_ids: 'subnet-86dbaace'
+ec2_subnet_ids: "subnet-86dbaace"
 ec2_region: "us-east-1"
 ec2_tag_Name: "websrv"
 ec2_tag_Type: "websrv"
