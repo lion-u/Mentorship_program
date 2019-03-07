@@ -1,9 +1,14 @@
 ---
- - hosts: localhost
-   connection: local
-   gather_facts: false
-   user: ubuntu
-   #pre_tasks:
-   # - include_vars: roles/ec2_types/{{type}}.yml
-   roles:
+- name: apply common configuration to all nodes
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  user: ubuntu
+  roles:
     - provision-ec2
+
+- name: configure and deploy the webservers and application code
+  hosts: ec2-52-214-198-149.eu-west-1.compute.amazonaws.com
+  remote_user: ubuntu
+  roles:
+    - tomcat

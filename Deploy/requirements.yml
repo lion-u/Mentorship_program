@@ -1,5 +1,0 @@
----
-- src: https://github.com/lion-u/Mentorship_program/tree/master/Deploy/lz-tomcat
-  scm: git
-- src: https://github.com/lion-u/Mentorship_program/tree/master/Deploy/lz-nginx
-  scm: git
