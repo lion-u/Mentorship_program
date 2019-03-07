@@ -3,7 +3,7 @@
    connection: local
    gather_facts: false
    user: ubuntu
-   pre_tasks:
-    - include_vars: roles/ec2_types/{{type}}.yml
+   #pre_tasks:
+   # - include_vars: roles/ec2_types/{{type}}.yml
    roles:
     - provision-ec2
