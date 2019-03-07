@@ -82,20 +82,19 @@
 #         name: 
 #         daemon_reload: yes
 
-- name: enable tomcat startup
-  become: true
-  systemd:
-        name: tomcat
-        state: reloaded
-  
+# - name: enable tomcat startup
+#   become: true
+#   systemd:
+#         name: tomcat
+#         state: reloaded
 
-- name: wait for tomcat to start
-  wait_for: port=8888
+# - name: wait for tomcat to start
+#   wait_for: port=8888
   
-- name: copy war to app servers
-  become: true
-  copy: src=./{{ tomcat_war }} dest=/opt/{{ tomcat_folder }}/webapps/{{ tomcat_war }} owner=tomcat group=tomcat mode=0744
-  notify: restart tomcat
+# - name: copy war to app servers
+#   become: true
+#   copy: src=./{{ tomcat_war }} dest=/opt/{{ tomcat_folder }}/webapps/{{ tomcat_war }} owner=tomcat group=tomcat mode=0744
+#   notify: restart tomcat
 
 - meta: flush_handlers
 # - include: appsrv/files/check1.yml
