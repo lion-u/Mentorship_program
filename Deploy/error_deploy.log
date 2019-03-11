@@ -1,0 +1,62 @@
+lzadmin@EPUALVIW1214:~/local_repo/Mentorship_program/Deploy$ ansible-playbook provision-ec2.yml --ask-vault-pass
+ [WARNING] Ansible is being run in a world writable directory (/home/lzadmin/local_repo/Mentorship_program/Deploy), ignoring it as an ansible.cfg source. For more information see https://docs.ansible.com/ansible/devel/reference_appendices/config.html#cfg-in-world-writable-dir
+Vault password:
+
+PLAY [apply common configuration to all nodes] ***********************************************************************************
+
+TASK [provision-ec2 : add var] ***************************************************************************************************
+ok: [localhost]
+
+TASK [provision-ec2 : Provision EC2 Box] *****************************************************************************************
+[DEPRECATION WARNING]: device_type is deprecated for block devices - use volume_type instead. This feature will be removed in
+version 2.9. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+changed: [localhost -> localhost]
+
+TASK [provision-ec2 : debug] *****************************************************************************************************
+ok: [localhost] => (item={u'ramdisk': None, u'kernel': None, u'root_device_type': u'ebs', u'private_dns_name': u'ip-172-31-22-121.eu-west-1.compute.internal', u'block_device_mapping': {u'/dev/sda1': {u'status': u'attached', u'delete_on_termination': True, u'volume_id': u'vol-02c2f8c3e62313428'}}, u'key_name': u'JenkinsKeyPair', u'public_ip': u'18.202.21.151', u'image_id': u'ami-0233bae36f499afe8', u'tenancy': u'default', u'private_ip': u'172.31.22.121', u'groups': {u'sg-085d6f10bec7de170': u'devenv-sg'}, u'public_dns_name': u'ec2-18-202-21-151.eu-west-1.compute.amazonaws.com', u'state_code': 16, u'id': u'i-0da2533ecea3ec8eb', u'tags': {u'Environment': u'test', u'Type': u'websrv', u'Name': u'websrv'}, u'placement': u'eu-west-1b', u'ami_launch_index': u'0', u'dns_name': u'ec2-18-202-21-151.eu-west-1.compute.amazonaws.com', u'region': u'eu-west-1', u'ebs_optimized': False, u'launch_time': u'2019-03-11T09:13:09.000Z', u'instance_type': u't2.micro', u'state': u'running', u'architecture': u'x86_64', u'hypervisor': u'xen', u'virtualization_type': u'hvm', u'root_device_name': u'/dev/sda1'}) => {
+    "item": {
+        "ami_launch_index": "0",
+        "architecture": "x86_64",
+        "block_device_mapping": {
+            "/dev/sda1": {
+                "delete_on_termination": true,
+                "status": "attached",
+                "volume_id": "vol-02c2f8c3e62313428"
+            }
+        },
+        "dns_name": "ec2-18-202-21-151.eu-west-1.compute.amazonaws.com",
+        "ebs_optimized": false,
+        "groups": {
+            "sg-085d6f10bec7de170": "devenv-sg"
+        },
+        "hypervisor": "xen",
+        "id": "i-0da2533ecea3ec8eb",
+        "image_id": "ami-0233bae36f499afe8",
+        "instance_type": "t2.micro",
+        "kernel": null,
+        "key_name": "JenkinsKeyPair",
+        "launch_time": "2019-03-11T09:13:09.000Z",
+        "placement": "eu-west-1b",
+        "private_dns_name": "ip-172-31-22-121.eu-west-1.compute.internal",
+        "private_ip": "172.31.22.121",
+        "public_dns_name": "ec2-18-202-21-151.eu-west-1.compute.amazonaws.com",
+        "public_ip": "18.202.21.151",
+        "ramdisk": null,
+        "region": "eu-west-1",
+        "root_device_name": "/dev/sda1",
+        "root_device_type": "ebs",
+        "state": "running",
+        "state_code": 16,
+        "tags": {
+            "Environment": "test",
+            "Name": "websrv",
+            "Type": "websrv"
+        },
+        "tenancy": "default",
+        "virtualization_type": "hvm"
+    }
+}
+
+TASK [provision-ec2 : add_host] **************************************************************************************************
+changed: [localhost] => (item={u'ramdisk': None, u'kernel': None, u'root_device_type': u'ebs', u'private_dns_name': u'ip-172-31-22-121.eu-west-1.compute.internal', u'block_device_mapping': {u'/dev/sda1': {u'status': u'attached', u'delete_on_termination': True, u'volume_id': u'vol-02c2f8c3e62313428'}}, u'key_name': u'JenkinsKeyPair', u'public_ip': u'18.202.21.151', u'image_id': u'ami-0233bae36f499afe8', u'tenancy': u'default', u'private_ip': u'172.31.22.121', u'groups': {u'sg-085d6f10bec7de170': u'devenv-sg'}, u'public_dns_name': u'ec2-18-202-21-151.eu-west-1.compute.amazonaws.com', u'state_code': 16, u'id': u'i-0da2533ecea3ec8eb', u'tags': {u'Environment': u'test', u'Type': u'websrv', u'Name': u'websrv'}, u'placement': u'eu-west-1b', u'ami_launch_index': u'0', u'dns_name': u'ec2-18-202-21-151.eu-west-1.compute.amazonaws.com', u'region': u'eu-west-1', u'ebs_optimized': False, u'launch_time': u'2019-03-11T09:13:09.000Z', u'instance_type': u't2.micro', u'state': u'running', u'architecture': u'x86_64', u'hypervisor': u'xen', u'virtualization_type': u'hvm', u'root_device_name': u'/dev/sda1'})
+ERROR! Invalid empty host name provided:
