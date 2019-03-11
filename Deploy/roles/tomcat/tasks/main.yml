@@ -5,9 +5,29 @@
       update_cache: yes
       cache_valid_time: 86400 #One day
 
-  - name: install JDK 11
+  # - name: install JDK 11
+  #   apt:
+  #     name: openjdk-11-jdk
+  #     state: present
+
+  - name: Install add-apt-repostory
+    become: yes
+    apt: name=software-properties-common state=latest
+
+  - name: Add Oracle Java Repository
+    become: yes
+    apt_repository: repo='ppa:webupd8team/java'
+
+  - name: Accept Java 8 License
+    become: yes
+    debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+
+  - name: Install Oracle Java 8
     apt:
-      name: openjdk-11-jdk
+      pkg:
+        - oracle-java8-installer
+        - ca-certificates
+        - oracle-java8-set-default
       state: present
 
   - name: add tomcat group
