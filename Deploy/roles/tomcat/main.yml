@@ -1,6 +1,8 @@
 ---
-- name: Update yum cache if needed.
-  become: true
-  yum: update_cache=yes
+- name: pre-task for connect
+  remote_user: ubuntu
+  become: yes
+  gather_facts: no
+  
 
   
