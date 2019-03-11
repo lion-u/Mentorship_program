@@ -13,13 +13,21 @@
   become: yes
   debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
 
+# - name: Install Oracle Java 8
+#   become: yes
+#   apt: name={{item}} state=latest
+#   with_items:
+#     - oracle-java8-installer
+#     - ca-certificates
+#     - oracle-java8-set-default
+
 - name: Install Oracle Java 8
-  become: yes
-  apt: name={{item}} state=latest
-  with_items:
-    - oracle-java8-installer
-    - ca-certificates
-    - oracle-java8-set-default
+  apt:
+    pkg:
+      - oracle-java8-installer
+      - ca-certificates
+      - oracle-java8-set-default
+    state: present
 
 - name: Ensure group "tomcat" exists
   become: true
@@ -92,7 +100,7 @@
   systemd:
     name: tomcat
     state: reloaded
-    
+
 - name: wait for tomcat to start
   wait_for: port=8888
 
