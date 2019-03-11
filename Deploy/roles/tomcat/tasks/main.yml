@@ -72,27 +72,27 @@
      group: tomcat
      mode: 0644
        
-- name: Open port 8888 for http access
-  become: true
-  firewalld:
-     port: 8888/tcp
-     permanent: yes
-     state: enabled
+- name: Allow all access to tcp port 8888
+  ufw:
+    rule: allow
+    port: 8888
+    proto: tcp
 
-- name: Restart the firewalld service to load firewall changes
-  become: true
-  service: 
-     name: firewalld 
-     state: restarted
+- name: Allow everything and enable UFW
+  ufw:
+    state: reloaded
+  
 - name: force systemd to reread configs after add tomcat service
   become: true
   systemd:
     daemon_reload: yes
+
 - name: enable tomcat startup
   become: true
   systemd:
     name: tomcat
     state: reloaded
+    
 - name: wait for tomcat to start
   wait_for: port=8888
 
