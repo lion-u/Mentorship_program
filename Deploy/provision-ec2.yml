@@ -1,11 +1,11 @@
 ---
-# - name: create ec2 instance
-#   hosts: localhost
-#   connection: local
-#   gather_facts: false
-#   user: ubuntu
-#   roles:
-#     - provision-ec2
+- name: create ec2 instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  user: ubuntu
+  roles:
+    - provision-ec2
 
 - name: configure and deploy the webservers and application code
   hosts: webservers

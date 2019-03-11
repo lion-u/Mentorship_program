@@ -1,112 +1,57 @@
-# tasks file for appsrv
 ---
+  - name: Update and upgrade apt packages
+    apt:
+      upgrade: yes
+      update_cache: yes
+      cache_valid_time: 86400 #One day
 
-- name: Install add-apt-repostory
-  become: yes
-  apt: name=software-properties-common state=latest
+  - name: install JDK 11
+    apt:
+      name: openjdk-11-jdk
+      state: present
 
-- name: Add Oracle Java Repository
-  become: yes
-  apt_repository: repo='ppa:webupd8team/java'
+  - name: add tomcat group
+    group:
+      name: tomcat
 
-- name: Accept Java 8 License
-  become: yes
-  debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+  - name: add tomcat user
+    user:
+      name: tomcat
+      group: tomcat
+      home: /user/share/tomcat
+      createhome: no
 
-# - name: Install Oracle Java 8
-#   become: yes
-#   apt: name={{item}} state=latest
-#   with_items:
-#     - oracle-java8-installer
-#     - ca-certificates
-#     - oracle-java8-set-default
+  - name: create /opt/tomcat directory
+    file:
+      path: /opt/tomcat
+      state: directory
+      mode: 0755
 
-- name: Install Oracle Java 8
-  apt:
-    pkg:
-      - oracle-java8-installer
-      - ca-certificates
-      - oracle-java8-set-default
-    state: present
+  - name: download & unarchive
+    unarchive:
+      src: http://apache.cs.utah.edu/tomcat/tomcat-9/v9.0.16/bin/apache-tomcat-9.0.16.tar.gz
+      dest: /opt/tomcat
+      remote_src: yes
+      extra_opts: [--strip-components=1]
 
-- name: Ensure group "tomcat" exists
-  become: true
-  group:
-     name: tomcat
-     state: present
-- name: Add the user 'tomcat' with a specific uid and a primary group of 'tomcat'
-  become: true
-  user:
-     name: tomcat
-     comment: Tomcat user
-     create_home: yes
-     group: tomcat
-- name: copy Tomcat
-  become: true
-  copy: 
-     src: "{{ tomcat_src_arc }}"
-     dest: "{{ tomcat_dest_arc }}"
-- name: Extract apache-tomcat-8.5.35.tar.gz into /opt/apache-tomcat-8.5.35
-  become: true
-  unarchive:
-     src: "{{ tomcat_dest_arc }}"
-     dest: /opt/
-     remote_src: yes
-     mode: 0755
-     owner: tomcat
-- name: Change ownership of Tomcat installation
-  become: true
-  file: 
-     path: /opt/{{ tomcat_folder }}
-     owner: tomcat 
-     group: tomcat 
-     state: directory 
-     recurse: yes
-- name: Configure Tomcat service  
-  become: true
-  template:
-     src: tomcat.service
-     dest: /etc/systemd/system/
-     owner: tomcat
-     group: tomcat
-     mode: 0644
-       
-- name: Configure Tomcat port 8888  
-  become: true
-  template:
-     src: server.xml
-     dest: /opt/{{ tomcat_folder }}/conf
-     owner: tomcat
-     group: tomcat
-     mode: 0644
-       
-- name: Allow all access to tcp port 8888
-  ufw:
-    rule: allow
-    port: 8888
-    proto: tcp
+  - name: Change ownership
+    file:
+      path: /opt/tomcat
+      owner: tomcat
+      group: tomcat
+      mode: "u+rwx,g+rx,o=rx"
+      recurse: yes
+      state: directory
 
-- name: Allow everything and enable UFW
-  ufw:
-    state: reloaded
-  
-- name: force systemd to reread configs after add tomcat service
-  become: true
-  systemd:
-    daemon_reload: yes
+  - name: Copy Tomcat service from local to remote
+    copy:
+       src: tomcat.service
+       dest: /etc/systemd/system/
+       mode: 0755
 
-- name: enable tomcat startup
-  become: true
-  systemd:
-    name: tomcat
-    state: reloaded
-
-- name: wait for tomcat to start
-  wait_for: port=8888
-
-- name: copy war to app servers
-  become: true
-  copy: src=./{{ tomcat_war }} dest=/opt/{{ tomcat_folder }}/webapps/{{ tomcat_war }} owner=tomcat group=tomcat mode=0744
-  notify: restart tomcat
-- meta: flush_handlers
- 
+  - name: Start and enable Tomcat service
+    systemd:
+      name: tomcat
+      state: started
+      enabled: true
+      daemon_reload: true
