@@ -8,7 +8,7 @@
     - provision-ec2
 
 - name: configure and deploy the webservers and application code
-  hosts: ec2-52-214-198-149.eu-west-1.compute.amazonaws.com
+  hosts: webservers
   remote_user: ubuntu
   roles:
     - tomcat
