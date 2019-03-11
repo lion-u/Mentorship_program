@@ -8,7 +8,7 @@
 #     - provision-ec2
 
 - name: configure and deploy the webservers and application code
-  hosts: 46.137.7.58
+  hosts: webservers
   remote_user: ubuntu
   become: yes
   gather_facts: false
