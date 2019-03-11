@@ -1,8 +1,0 @@
----
-- name: pre-task for connect
-  remote_user: ubuntu
-  become: yes
-  gather_facts: no
-  
-
-  

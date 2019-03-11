@@ -1,5 +1,10 @@
 # tasks file for appsrv
 ---
+ - name: pre-task for connect
+   remote_user: ubuntu
+   become: yes
+   gather_facts: no
+
  - name: Install Java
    become: true 
    yum:
