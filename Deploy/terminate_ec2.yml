@@ -9,7 +9,7 @@
       ec2_instance_facts:
         region: "{{ region }}"
         filters:
-          "tag:Type": "webserver"
+          "tag:Type": "websrv"
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
       register: ec2
