@@ -69,6 +69,25 @@
        dest: /etc/systemd/system/
        mode: 0755
 
+  - name: Configure Tomcat port 8888  
+    become: true
+    template:
+      src: server.xml
+      dest: /opt/tomcat/conf
+      owner: tomcat
+      group: tomcat
+      mode: 0644
+        
+  - name: Allow all access to tcp port 8888
+    ufw:
+      rule: allow
+      port: 8888
+      proto: tcp
+
+  - name: Reload UFW
+    ufw:
+      state: reloaded
+    
   - name: Start and enable Tomcat service
     systemd:
       name: tomcat
