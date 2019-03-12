@@ -97,4 +97,4 @@
       name: tomcat
       state: started
       enabled: true
-      daemon_reload: true
+    daemon_reload: true
