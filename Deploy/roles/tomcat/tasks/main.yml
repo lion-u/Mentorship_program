@@ -94,7 +94,10 @@
     
   - name: Start and enable Tomcat service
     systemd:
-      name: tomcat
-      state: started
-      enabled: true
-    daemon_reload: true
+     name: tomcat
+     state: started
+     enabled: true
+     
+  - name: just force systemd to reread configs
+    systemd:
+      daemon_reload: yes
