@@ -87,6 +87,10 @@
   - name: Reload UFW
     ufw:
       state: reloaded
+
+  - name: copy war to app servers
+    become: true
+    copy: src=./{{ tomcat_war }} dest=/opt/tomcat/webapps/{{ tomcat_war }} owner=tomcat group=tomcat mode=0744
     
   - name: Start and enable Tomcat service
     systemd:
