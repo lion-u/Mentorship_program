@@ -9,7 +9,7 @@
 
 - name: configure and deploy the webservers and application code
   hosts: webservers
-  remote_user: ubuntu
+  remote_user: jenkins
   become: yes
   gather_facts: false
   pre_tasks:
@@ -17,10 +17,10 @@
      raw: 'sudo apt-get update & sudo apt-get -y install python'
   roles:
     - tomcat
-    
+
 - name: configure and deploy the webservers and application code
   hosts: webservers
-  remote_user: ubuntu
+  remote_user: jenkins
   become: yes
   gather_facts: false
   roles:
