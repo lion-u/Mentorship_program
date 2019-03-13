@@ -1,26 +1,26 @@
 # tasks file for appsrv
 ---
-- name: nginx | Add repo
+- name: Task 1 - Add repo nginx
   become: true
   apt_repository:
     repo: "ppa:nginx/stable"
     state: present
     update_cache: yes
 
-- name: Install nginx
+- name: Task 2 - Install nginx
   become: true
   apt:
     name: nginx
     state: present
 
-- name: Allow all access to tcp port 80
+- name: Task 3 - Allow all access to tcp port 80
   become: true
   ufw:
     rule: allow
     port: 80
     proto: tcp
 
-- name: Configure NGINX LoadBalaccer  
+- name: Task 4 - Configure NGINX Proxy  
   become: true
   template:
         src: default.j2

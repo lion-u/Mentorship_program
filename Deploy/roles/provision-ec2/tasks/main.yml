@@ -1,8 +1,10 @@
 ---
- - name: add var
+ - name: Task 1 - add variable to key secrets file  
    include_vars:
      file: aws_keys.yml
- - name: Provision EC2 Box
+# (file encrypted ansible vault)
+
+ - name: task 2 - Provision EC2 virtual machine
    local_action:
      module: ec2
      aws_access_key: "{{ aws_access_key }}"
@@ -34,19 +36,19 @@
    with_items: "{{ ec2.instances }}"
    become: yes
 
- - name: Add tag to Instance(s)
-   ec2_tag:
-     aws_access_key: "{{ aws_access_key }}"
-     aws_secret_key: "{{ aws_secret_key }}"
-     resource: "{{ item.id }}"
-     region: "{{ ec2_region }}"
-     state: "present"
-   with_items: "{{ ec2.instances }}"
-   args:
-     tags:
-       Type: webserver
+#  - name: Task 3 - Add tag to Instance(s)
+#    ec2_tag:
+#      aws_access_key: "{{ aws_access_key }}"
+#      aws_secret_key: "{{ aws_secret_key }}"
+#      resource: "{{ item.id }}"
+#      region: "{{ ec2_region }}"
+#      state: "present"
+#    with_items: "{{ ec2.instances }}"
+#    args:
+#      tags:
+#        Type: webserver
 
- - name: Wait for SSH to come up
+ - name: Task 3 - Wait for SSH to come up
    wait_for:
      host: "{{ item.public_ip }}"
      port: 22
