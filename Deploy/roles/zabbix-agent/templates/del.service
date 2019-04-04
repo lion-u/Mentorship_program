@@ -1,0 +1,14 @@
+[Unit]
+Description=delete.zabbix.agent
+Requires=network.target
+DefaultDependencies=no
+Before=shutdown.target reboot.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/bin/true
+ExecStop=/home/ubuntu/agentdel.sh
+
+[Install]
+WantedBy=multi-user.target
