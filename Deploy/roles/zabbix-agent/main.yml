@@ -1,6 +1,1 @@
 ---
-- name: Install nginx
-  become: yes
-  hosts: webservers
-
-  
