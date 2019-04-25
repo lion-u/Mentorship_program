@@ -24,11 +24,11 @@
     notify: restart zabbix-agent
     become: true
 
-  - name: Configure RemoveAgent
+  - name: Configure Agent for delete
     template: src=agentdel.sh dest=/home/ubuntu/ mode=0755
     become: true
 
-  - name: Install RemoveAgent init script
+  - name: Install DeleteAgent init script
     template: src=rmagent.sh dest=/lib/systemd/system/del.service mode=0755
     become: true
 
