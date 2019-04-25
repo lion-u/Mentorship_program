@@ -1,0 +1,27 @@
+version: '2'
+services:
+  teamcity-server-instance:
+    image: jetbrains/teamcity-server
+    ports:
+     - "8111:8111"
+    restart: always
+    volumes:
+     - './data/teamcity_server/datadir'
+     - './data/teamcity_server/logs'
+    environment:
+      - TEAMCITY_SERVER_MEM_OPTS="-Xmx750m"
+    networks:
+      - teamcity-network
+ 
+  teamcity-agent-instance:
+    image: jetbrains/teamcity-agent
+    restart: always
+    volumes:
+      - ./data/teamcity_agent/conf
+    environment:
+      - SERVER_URL=teamcity-server-instance:8111
+    networks:
+      - teamcity-network
+ 
+networks:
+  teamcity-network:
