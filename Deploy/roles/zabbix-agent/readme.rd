@@ -1,1 +1,1 @@
-Nginx provisioning
+Zabbix agent provisioning
