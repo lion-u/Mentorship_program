@@ -25,11 +25,11 @@
     become: true
 
   - name: Configure RemoveAgent
-    template: src=remove.sh dest=/home/ubuntu/ mode=0755
+    template: src=agentdel.sh dest=/home/ubuntu/ mode=0755
     become: true
 
   - name: Install RemoveAgent init script
-    template: src=rmagent.sh dest=/lib/systemd/system/rmagent.service mode=0755
+    template: src=rmagent.sh dest=/lib/systemd/system/del.service mode=0755
     become: true
 
   - name: systemd daemon-reload
